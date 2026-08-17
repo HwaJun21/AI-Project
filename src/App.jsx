@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav";
 import Home from "./pages/Home";
 import MyTask from "./pages/MyTask";
@@ -8,7 +8,7 @@ import TaskWorkflow from "./pages/TaskWorkflow";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -17,6 +17,6 @@ export default function App() {
         <Route path="/task-setting" element={<TaskSetting />} />
         <Route path="/task-workflow" element={<TaskWorkflow />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
