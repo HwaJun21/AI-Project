@@ -4,6 +4,7 @@ const links = [
   { to: "/my-task", label: "My Task" },
   { to: "/dashboard", label: "Dashboard" },
   { to: "/task-setting", label: "Task Setting" },
+  { to: "/task-workflow", label: "Task Workflow" },
 ];
 
 export default function Nav() {

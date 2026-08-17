@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 
-const DAY_WIDTH = 64;
 const ROW_HEIGHT = 56;
 const LABEL_WIDTH = 240;
 
@@ -25,7 +24,7 @@ function daysBetween(a, b) {
   return (b.getTime() - a.getTime()) / 86400000;
 }
 
-export default function GanttChart({ tasks, highlightOwner, today }) {
+export default function GanttChart({ tasks, highlightOwner, today, dayWidth = 64 }) {
   const { rangeStart, days, rows, rowById } = useMemo(() => {
     if (tasks.length === 0) {
       return { rangeStart: startOfDay(today), days: [], rows: [], rowById: {} };
@@ -44,7 +43,7 @@ export default function GanttChart({ tasks, highlightOwner, today }) {
       return d;
     });
 
-    const xFor = (v) => daysBetween(minDate, toDate(v)) * DAY_WIDTH;
+    const xFor = (v) => daysBetween(minDate, toDate(v)) * dayWidth;
 
     const rows = tasks.map((t, i) => {
       const x1 = xFor(t.plannedStart);
@@ -56,7 +55,7 @@ export default function GanttChart({ tasks, highlightOwner, today }) {
         width: Math.max(x2 - x1, 12),
         top,
         centerY: top + ROW_HEIGHT / 2,
-        isOwner: t.owner === highlightOwner,
+        isOwner: highlightOwner ? t.owner === highlightOwner : true,
       };
     });
 
@@ -66,7 +65,7 @@ export default function GanttChart({ tasks, highlightOwner, today }) {
       rows,
       rowById: Object.fromEntries(rows.map((r) => [r.task.id, r])),
     };
-  }, [tasks, highlightOwner, today]);
+  }, [tasks, highlightOwner, today, dayWidth]);
 
   if (tasks.length === 0) {
     return (
@@ -76,9 +75,9 @@ export default function GanttChart({ tasks, highlightOwner, today }) {
     );
   }
 
-  const totalWidth = days.length * DAY_WIDTH;
+  const totalWidth = days.length * dayWidth;
   const totalHeight = rows.length * ROW_HEIGHT;
-  const todayX = daysBetween(rangeStart, startOfDay(today)) * DAY_WIDTH + DAY_WIDTH / 2;
+  const todayX = daysBetween(rangeStart, startOfDay(today)) * dayWidth + dayWidth / 2;
 
   return (
     <div className="rounded-2xl border border-navy-950/10 bg-white shadow-sm">
@@ -100,7 +99,7 @@ export default function GanttChart({ tasks, highlightOwner, today }) {
                 return (
                   <div
                     key={i}
-                    style={{ width: DAY_WIDTH }}
+                    style={{ width: dayWidth }}
                     className={`flex-none border-r border-navy-950/5 px-1 py-2.5 text-center ${
                       isToday ? "bg-teal-500/10" : ""
                     }`}
@@ -160,7 +159,7 @@ export default function GanttChart({ tasks, highlightOwner, today }) {
                 {days.map((d, i) => (
                   <div
                     key={i}
-                    style={{ width: DAY_WIDTH }}
+                    style={{ width: dayWidth }}
                     className={`flex-none border-r border-navy-950/5 ${
                       startOfDay(d).getTime() === startOfDay(today).getTime()
                         ? "bg-teal-500/5"
@@ -254,9 +253,11 @@ export default function GanttChart({ tasks, highlightOwner, today }) {
         <span className="flex items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded ring-2 ring-rose-600/50" /> Critical Path
         </span>
-        <span className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded bg-navy-950 opacity-40" /> 다른 담당자의 선후행 작업
-        </span>
+        {highlightOwner && (
+          <span className="flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded bg-navy-950 opacity-40" /> 다른 담당자의 선후행 작업
+          </span>
+        )}
         <span className="flex items-center gap-1.5">
           <span className="h-2.5 w-0 border-l-2 border-dashed border-amber-500" /> 오늘
         </span>
