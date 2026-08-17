@@ -2,6 +2,10 @@ import { useMemo, useState } from "react";
 import { tasks as initialTasks } from "../data/mockTasks";
 import StatusBadge from "../components/StatusBadge";
 import GanttChart from "../components/GanttChart";
+import GanttZoomControl, {
+  ZOOM_LEVELS,
+  DEFAULT_ZOOM_INDEX,
+} from "../components/GanttZoomControl";
 
 const owners = [...new Set(initialTasks.map((t) => t.owner))];
 const TODAY = new Date("2026-08-17T00:00:00");
@@ -20,6 +24,7 @@ export default function MyTask() {
   const [ownerFilter, setOwnerFilter] = useState(owners[0]);
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
+  const [zoomIndex, setZoomIndex] = useState(DEFAULT_ZOOM_INDEX);
 
   const myTasks = useMemo(
     () =>
@@ -123,18 +128,17 @@ export default function MyTask() {
 
       {/* 간트 차트: 선후행 작업 관계 */}
       <div className="mb-10">
-        <div className="mb-3 flex items-center justify-between">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
           <h2 className="font-display text-sm font-semibold text-navy-950">
             일정 · 선후행 관계 (Gantt)
           </h2>
-          <span className="font-mono text-[10px] text-navy-950/40">
-            좌우로 스크롤하여 전체 일정을 확인하세요
-          </span>
+          <GanttZoomControl zoomIndex={zoomIndex} onChange={setZoomIndex} />
         </div>
         <GanttChart
           tasks={ganttTasks}
           highlightOwner={ownerFilter}
           today={TODAY}
+          dayWidth={ZOOM_LEVELS[zoomIndex]}
           maxHeight="60vh"
         />
       </div>

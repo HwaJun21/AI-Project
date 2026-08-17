@@ -10,6 +10,26 @@ body {
   @apply bg-slate-50 text-navy-950 font-body antialiased;
 }
 
+/* 간트 차트 스크롤 영역: OS가 스크롤바를 자동으로 숨기는 환경에서도
+   가로/세로 스크롤이 가능하다는 것을 항상 알 수 있도록 스크롤바를 고정 표시 */
+.gantt-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(11, 18, 32, 0.25) transparent;
+}
+.gantt-scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.gantt-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.gantt-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(11, 18, 32, 0.25);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
 /* 노드-라인 커넥터 시그니처 모티프 */
 .path-connector {
   position: relative;
