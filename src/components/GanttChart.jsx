@@ -87,7 +87,10 @@ export default function GanttChart({
 
   return (
     <div className="rounded-2xl border border-navy-950/10 bg-white shadow-sm">
-      <div className="overflow-auto" style={maxHeight ? { maxHeight } : undefined}>
+      <div
+        className="gantt-scroll overflow-auto"
+        style={maxHeight ? { maxHeight } : undefined}
+      >
         <div style={{ minWidth: LABEL_WIDTH + totalWidth }}>
           {/* 날짜 헤더 */}
           <div className="sticky top-0 z-30 flex border-b border-navy-950/10">
