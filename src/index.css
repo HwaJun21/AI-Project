@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-slate-50 text-navy-950 font-body antialiased;
+}
+
+/* 노드-라인 커넥터 시그니처 모티프 */
+.path-connector {
+  position: relative;
+}
+.path-connector::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: repeating-linear-gradient(
+    to right,
+    currentColor 0,
+    currentColor 4px,
+    transparent 4px,
+    transparent 10px
+  );
+  opacity: 0.35;
+}
