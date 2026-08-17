@@ -24,7 +24,13 @@ function daysBetween(a, b) {
   return (b.getTime() - a.getTime()) / 86400000;
 }
 
-export default function GanttChart({ tasks, highlightOwner, today, dayWidth = 64 }) {
+export default function GanttChart({
+  tasks,
+  highlightOwner,
+  today,
+  dayWidth = 64,
+  maxHeight,
+}) {
   const { rangeStart, days, rows, rowById } = useMemo(() => {
     if (tasks.length === 0) {
       return { rangeStart: startOfDay(today), days: [], rows: [], rowById: {} };
@@ -81,13 +87,13 @@ export default function GanttChart({ tasks, highlightOwner, today, dayWidth = 64
 
   return (
     <div className="rounded-2xl border border-navy-950/10 bg-white shadow-sm">
-      <div className="overflow-x-auto">
+      <div className="overflow-auto" style={maxHeight ? { maxHeight } : undefined}>
         <div style={{ minWidth: LABEL_WIDTH + totalWidth }}>
           {/* 날짜 헤더 */}
-          <div className="flex border-b border-navy-950/10">
+          <div className="sticky top-0 z-30 flex border-b border-navy-950/10">
             <div
               style={{ width: LABEL_WIDTH }}
-              className="sticky left-0 z-20 flex-none border-r border-navy-950/10 bg-slate-50 px-4 py-2.5"
+              className="sticky left-0 z-40 flex-none border-r border-navy-950/10 bg-slate-50 px-4 py-2.5"
             >
               <p className="font-mono text-[10px] uppercase tracking-wider text-navy-950/40">
                 작업
