@@ -131,7 +131,12 @@ export default function MyTask() {
             좌우로 스크롤하여 전체 일정을 확인하세요
           </span>
         </div>
-        <GanttChart tasks={ganttTasks} highlightOwner={ownerFilter} today={TODAY} />
+        <GanttChart
+          tasks={ganttTasks}
+          highlightOwner={ownerFilter}
+          today={TODAY}
+          maxHeight="60vh"
+        />
       </div>
 
       <div className="space-y-4">

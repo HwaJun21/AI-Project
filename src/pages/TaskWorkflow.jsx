@@ -69,7 +69,7 @@ export default function TaskWorkflow() {
         </div>
       </div>
 
-      <GanttChart tasks={allTasks} today={TODAY} dayWidth={dayWidth} />
+      <GanttChart tasks={allTasks} today={TODAY} dayWidth={dayWidth} maxHeight="70vh" />
     </div>
   );
 }
