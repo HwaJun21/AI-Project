@@ -20,7 +20,7 @@ export default function Home() {
       </section>
 
       <section className="bg-slate-50 py-20">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-6 sm:grid-cols-2 lg:grid-cols-4">
           <ServiceCard
             to="/my-task"
             icon="📋"
@@ -49,6 +49,16 @@ export default function Home() {
             lines={[
               "작업 항목의 5단계 분류(단계/시스템/업무/항목/작업)와 선후행 관계를 정의하는 화면입니다.",
               "Critical Path 지정, 담당자·산출물 등 작업 마스터 데이터를 등록·수정합니다.",
+            ]}
+          />
+          <ServiceCard
+            to="/task-workflow"
+            icon="🗓️"
+            accentKey="navy"
+            title="Task Workflow"
+            lines={[
+              "전체 작업을 하나의 간트 차트로 보여주는 화면입니다.",
+              "선후행 관계를 화살표로 확인하고, 확대·축소로 전체 일정과 상세 일정을 오가며 볼 수 있습니다.",
             ]}
           />
         </div>
