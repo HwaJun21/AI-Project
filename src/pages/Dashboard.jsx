@@ -16,6 +16,14 @@ export default function Dashboard() {
   const overallRate = Math.round((done / total) * 100);
   const criticalChain = tasks.filter((t) => t.critical);
 
+  const taskById = Object.fromEntries(tasks.map((t) => [t.id, t]));
+  const riskTask =
+    tasks.find((t) => t.critical && t.status === "지연") ||
+    tasks.find((t) => t.status === "지연");
+  const riskSuccessors = riskTask?.successor
+    ?.map((id) => taskById[id]?.id)
+    .filter(Boolean);
+
   return (
     <div className="mx-auto max-w-6xl px-6 py-10">
       <p className="font-mono text-xs uppercase tracking-[0.3em] text-teal-600">
@@ -107,9 +115,22 @@ export default function Dashboard() {
             </h2>
           </div>
           <p className="mt-3 text-sm leading-relaxed text-white/70">
-            Critical Path 상 <strong className="text-amber-500">MIG-0002</strong>가
-            지연되어 후행 작업(MIG-0003, MIG-0005) 전체 일정에 영향이
-            예상됩니다. 담당자 이서연님 리소스 재배정을 검토해 주세요.
+            {riskTask ? (
+              <>
+                {riskTask.critical ? "Critical Path 상 " : ""}
+                <strong className="text-amber-500">{riskTask.id}</strong>
+                {"("}
+                {riskTask.task}
+                {")"}가 지연되어
+                {riskSuccessors?.length
+                  ? ` 후행 작업(${riskSuccessors.join(", ")}) `
+                  : " "}
+                일정에 영향이 예상됩니다. 담당자 {riskTask.owner}님 리소스
+                재배정을 검토해 주세요.
+              </>
+            ) : (
+              "현재 지연된 작업이 없습니다. 전체 일정이 계획대로 진행 중입니다."
+            )}
           </p>
           <div className="mt-4 flex gap-2">
             <button className="rounded-lg bg-teal-500 px-3 py-1.5 font-mono text-xs font-medium text-navy-950">

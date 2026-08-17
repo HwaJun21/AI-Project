@@ -4,6 +4,7 @@ const accent = {
   cyan: "text-teal-500 bg-teal-500/10",
   orange: "text-amber-500 bg-amber-500/10",
   rose: "text-rose-600 bg-rose-600/10",
+  navy: "text-navy-800 bg-navy-800/10",
 };
 
 export default function ServiceCard({ to, icon, accentKey, title, lines }) {
